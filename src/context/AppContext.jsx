@@ -9,7 +9,7 @@ export const AppProvider = ({ children }) => {
   const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')) || {
     name: 'User',
     email: 'user@example.com',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Lucky'
+    avatar: '/avatars/avatar-man.png'
   });
   const [currency, setCurrency] = useState(localStorage.getItem('currency') || 'PKR');
 

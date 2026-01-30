@@ -6,8 +6,11 @@ const ProfileModal = ({ profile, onSave, onClose }) => {
   const [activeAvatar, setActiveAvatar] = useState(profile.avatar);
 
   const avatars = [
-    'Lucky', 'Spooky', 'Ginger', 'Snowball', 'Sassy', 'Mittens'
-  ].map(seed => `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`);
+    '/avatars/avatar-man.png',
+    '/avatars/avatar-woman.png',
+    '/avatars/avatar-boy.jpg',
+    '/avatars/avatar-girl.jpg'
+  ];
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
