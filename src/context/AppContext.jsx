@@ -35,6 +35,11 @@ export const AppProvider = ({ children }) => {
 
   const settings = useLiveQuery(() => db.settings.toArray(), []) || [];
 
+  const links = useLiveQuery(() => 
+    db.links.where('isDeleted').equals(0).reverse().sortBy('createdAt'),
+    []
+  ) || [];
+
   useEffect(() => {
     // Initializing DB or checking status
     db.open().catch(err => {
@@ -56,6 +61,7 @@ export const AppProvider = ({ children }) => {
     notes,
     expenses,
     settings,
+    links,
     theme,
     setTheme,
     currency,
@@ -64,7 +70,7 @@ export const AppProvider = ({ children }) => {
     profile,
     setProfile,
     db
-  }), [notes, expenses, settings, theme, currency, currencySymbol, profile]);
+  }), [notes, expenses, settings, links, theme, currency, currencySymbol, profile]);
 
   return (
     <AppContext.Provider value={value}>

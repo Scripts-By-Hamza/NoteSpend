@@ -8,6 +8,8 @@ import SettingsPage from './pages/SettingsPage';
 import AddNotePage from './pages/AddNotePage';
 import AddExpensePage from './pages/AddExpensePage';
 import NoteDetailPage from './pages/NoteDetailPage';
+import LinksPage from './pages/LinksPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
@@ -15,10 +17,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
+          <Route path="profile" element={<ProfilePage />} />
           <Route path="notes" element={<NotesPage />} />
           <Route path="notes/:id" element={<NoteDetailPage />} />
           <Route path="expenses" element={<ExpensesPage />} />
           <Route path="settings" element={<SettingsPage />} />
+          <Route path="links" element={<LinksPage />} />
           <Route path="add-note" element={<AddNotePage />} />
           <Route path="add-expense" element={<AddExpensePage />} />
           <Route path="expenses/edit/:id" element={<AddExpensePage />} />

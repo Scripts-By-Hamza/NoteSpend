@@ -6,7 +6,8 @@ db.version(1).stores({
   notes: 'id, title, createdAt, updatedAt, pinned, *tags, isDeleted',
   expenses: 'id, date, category, type, linkedNoteId, isDeleted',
   categories: 'id, type, name',
-  settings: 'key'
+  settings: 'key',
+  links: 'id, name, url, createdAt, updatedAt, isDeleted'
 });
 
 // Default categories

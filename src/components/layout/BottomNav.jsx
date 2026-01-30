@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, FileText, Plus, Wallet, Settings } from 'lucide-react';
+import { Home, FileText, Plus, Wallet, Settings, Link as LinkIcon, User } from 'lucide-react';
 
 const BottomNav = () => {
   return (
@@ -11,6 +11,14 @@ const BottomNav = () => {
       >
         <Home size={24} />
         <span className="text-xs">Home</span>
+      </NavLink>
+
+      <NavLink 
+        to="/profile" 
+        className={({ isActive }) => `flex flex-col items-center justify-center w-full h-full space-y-1 ${isActive ? 'text-primary' : 'text-gray-500 dark:text-gray-400'}`}
+      >
+        <User size={24} />
+        <span className="text-xs">Profile</span>
       </NavLink>
       
       <NavLink 
@@ -36,6 +44,14 @@ const BottomNav = () => {
       >
         <Wallet size={24} />
         <span className="text-xs">Expenses</span>
+      </NavLink>
+
+      <NavLink 
+        to="/links" 
+        className={({ isActive }) => `flex flex-col items-center justify-center w-full h-full space-y-1 ${isActive ? 'text-primary' : 'text-gray-500 dark:text-gray-400'}`}
+      >
+        <LinkIcon size={24} />
+        <span className="text-xs">Links</span>
       </NavLink>
 
       <NavLink 
