@@ -1,0 +1,1035 @@
+================================================================================
+                    PRODUCT REQUIREMENTS DOCUMENT (PRD)
+================================================================================
+
+Product Name: NoteSpend - Notes & Expense Manager
+Version: 1.0
+Date: January 30, 2026
+Document Owner: Product Team
+Status: Draft
+
+
+================================================================================
+TABLE OF CONTENTS
+================================================================================
+
+1. Executive Summary
+2. Product Vision & Objectives
+3. Target Audience
+4. Market Analysis & Competitive Landscape
+5. Product Overview
+6. Core Modules & Features
+   6.1 Notes Module
+   6.2 Expense Module
+   6.3 Smart Linking System
+7. User Experience & Interface Design
+   7.1 Screen Specifications
+   7.2 Navigation Structure
+8. Technical Architecture
+   8.1 Technology Stack
+   8.2 Data Models
+   8.3 Storage & Performance
+9. Development Roadmap
+10. Success Metrics & KPIs
+11. Risk Assessment & Mitigation
+12. Future Enhancements
+13. Appendix
+
+
+================================================================================
+1. EXECUTIVE SUMMARY
+================================================================================
+
+NoteSpend is an offline-first web application that combines note-taking and
+expense tracking in a single, unified platform. The application addresses the
+common pain point of users needing to switch between multiple apps to manage
+their daily notes and financial transactions.
+
+Key Differentiator: Smart Linking System that allows users to connect notes
+with related expenses, enabling use cases like trip budgeting, project expense
+tracking, and event planning.
+
+Target Launch: Q2 2026 (MVP)
+Platform: Progressive Web App (PWA)
+Primary Markets: Students, Freelancers, Small Business Owners, Travelers
+
+
+================================================================================
+2. PRODUCT VISION & OBJECTIVES
+================================================================================
+
+Vision Statement:
+"Empower users to seamlessly capture thoughts and track spending in one place,
+making personal and project-based financial management effortless."
+
+Primary Objectives:
+- Provide a fast, offline-capable application for notes and expense management
+- Eliminate the need for multiple apps through smart integration
+- Enable contextual expense tracking linked to events, trips, or projects
+- Ensure data privacy through local-first storage
+- Deliver a simple, intuitive user experience optimized for mobile
+
+Success Criteria:
+- 10,000 active users within 3 months of launch
+- 70% user retention rate after 30 days
+- Average session duration of 5+ minutes
+- 4.5+ star rating on app stores
+
+
+================================================================================
+3. TARGET AUDIENCE
+================================================================================
+
+Primary User Personas:
+
+Persona 1: "Busy Student"
+- Age: 18-25
+- Needs: Track study notes and daily expenses
+- Pain Points: Limited budget, needs simple tracking
+- Goals: Manage monthly allowance, organize class notes
+
+Persona 2: "Freelance Professional"
+- Age: 25-40
+- Needs: Project notes and client-related expenses
+- Pain Points: Multiple clients, hard to track project costs
+- Goals: Bill clients accurately, maintain project documentation
+
+Persona 3: "Small Business Owner"
+- Age: 30-50
+- Needs: Business notes and expense categorization
+- Pain Points: Tax preparation, receipt management
+- Goals: Organize business expenses, maintain records
+
+Persona 4: "Travel Enthusiast"
+- Age: 25-45
+- Needs: Trip planning notes and travel expenses
+- Pain Points: Budget overruns, lost receipts
+- Goals: Stay within trip budget, remember travel details
+
+
+================================================================================
+4. MARKET ANALYSIS & COMPETITIVE LANDSCAPE
+================================================================================
+
+Market Opportunity:
+- Note-taking apps market: $1.8B (2025)
+- Expense tracking apps market: $2.3B (2025)
+- Combined market opportunity: Underserved niche
+
+Competitive Analysis:
+
+Notion / Evernote (Note Apps):
+✓ Strengths: Feature-rich, cloud sync
+✗ Weaknesses: No native expense tracking, requires internet
+
+Mint / Wallet (Expense Apps):
+✓ Strengths: Detailed analytics, bank integration
+✗ Weaknesses: No note-taking, privacy concerns
+
+NoteSpend Advantages:
+1. Integrated solution (notes + expenses)
+2. Offline-first architecture
+3. Smart linking between notes and expenses
+4. Privacy-focused (local storage)
+5. Free and open (no subscription)
+
+
+================================================================================
+5. PRODUCT OVERVIEW
+================================================================================
+
+Product Type: Progressive Web App (PWA)
+
+Core Value Propositions:
+1. All-in-One Solution: Eliminate app switching
+2. Contextual Finance: Link expenses to life events/projects
+3. Offline-First: Works without internet
+4. Privacy-Focused: Data stays on device
+5. Zero Learning Curve: Intuitive interface
+
+Key Features Summary:
+- Note creation with tags and attachments
+- Expense/income tracking with categories
+- Smart linking between notes and expenses
+- Monthly financial summaries
+- Data export capabilities
+- Customizable themes and settings
+
+
+================================================================================
+6. CORE MODULES & FEATURES
+================================================================================
+
+--------------------------------------------------------------------------------
+6.1 NOTES MODULE
+--------------------------------------------------------------------------------
+
+Feature Set:
+
+1. Create Note
+   - Required Fields: Title
+   - Optional Fields: Description (rich text)
+   - Auto-generated: Timestamp, unique ID
+   - Character Limits: Title (100 chars), Description (10,000 chars)
+
+2. Edit Note
+   - Modify title, description, tags
+   - Update linked expenses
+   - View edit history (future enhancement)
+
+3. Delete Note
+   - Confirmation dialog
+   - Option to keep/remove linked expenses
+   - Soft delete with 30-day recovery period
+
+4. Organize Notes
+   - Tags: Create custom tags (max 20 per note)
+   - Pin: Mark important notes (unlimited)
+   - Sort: By date, title, or last modified
+   - Filter: By tag, date range, linked expenses
+
+5. Search Notes
+   - Full-text search across title and description
+   - Filter by tags
+   - Search within date ranges
+   - Instant results (< 100ms)
+
+6. Attachments (Phase 2)
+   - Supported formats: Images (JPG, PNG), PDFs, documents
+   - Size limit: 10MB per file, 50MB total per note
+   - Storage: IndexedDB as Base64
+
+7. Linked Expenses
+   - View all expenses linked to note
+   - Quick add expense from note detail page
+   - Total expense summary for note
+   - Filter note by expense amount range
+
+Acceptance Criteria:
+- Note creation takes < 2 seconds
+- Search returns results in < 100ms for 1000+ notes
+- Offline mode supports all CRUD operations
+- No data loss during offline/online transitions
+
+
+--------------------------------------------------------------------------------
+6.2 EXPENSE MODULE
+--------------------------------------------------------------------------------
+
+Feature Set:
+
+1. Add Expense/Income
+   - Type: Toggle between Expense/Income
+   - Amount: Numeric input (up to 2 decimal places)
+   - Category: Dropdown selection
+   - Date: Date picker (defaults to today)
+   - Description: Optional text (500 chars)
+   - Receipt: Optional image upload
+   - Linked Note: Optional note selection
+
+2. Expense Categories (Customizable)
+   Default Categories:
+   - Food & Dining
+   - Transportation
+   - Shopping
+   - Bills & Utilities
+   - Entertainment
+   - Healthcare
+   - Education
+   - Travel
+   - Rent/Mortgage
+   - Other
+
+3. Income Categories (Customizable)
+   Default Categories:
+   - Salary
+   - Freelance
+   - Business
+   - Investment
+   - Gift/Bonus
+   - Other
+
+4. Edit/Delete Expense
+   - Full edit capability
+   - Confirmation before deletion
+   - Update linked note relationships
+
+5. Filter & Search
+   - Date range selection
+   - Category filter (multi-select)
+   - Amount range filter
+   - Linked note filter
+   - Type filter (expense/income/both)
+
+6. Receipt Management
+   - Camera capture or file upload
+   - Image preview
+   - Crop/rotate capability (Phase 2)
+   - OCR text extraction (Phase 3)
+
+7. Monthly Summary Dashboard
+   - Total Income (current month)
+   - Total Expenses (current month)
+   - Net Balance (income - expenses)
+   - Category-wise breakdown
+   - Daily average spending
+   - Comparison with previous month
+
+Acceptance Criteria:
+- Expense entry takes < 3 seconds
+- Filters apply in real-time (< 200ms)
+- Receipt images load in < 1 second
+- Monthly calculations accurate to 2 decimal places
+
+
+--------------------------------------------------------------------------------
+6.3 SMART LINKING SYSTEM
+--------------------------------------------------------------------------------
+
+Core Concept:
+Enable bidirectional relationships between Notes and Expenses to provide
+contextual financial tracking.
+
+Relationship Rules:
+- One Note → Many Expenses (1:N)
+- One Expense → One Note (N:1)
+- Optional relationship (not mandatory)
+
+Use Cases:
+
+Use Case 1: Trip Planning
+Note: "Lahore Weekend Trip - March 2026"
+Linked Expenses:
+  - Fuel: PKR 3,000
+  - Hotel: PKR 12,000
+  - Food: PKR 4,500
+  - Shopping: PKR 2,000
+Total Trip Cost: PKR 21,500
+
+Use Case 2: Client Project
+Note: "Website Design - Client ABC"
+Linked Expenses:
+  - Stock Photos: USD 50
+  - Hosting: USD 15
+  - Domain: USD 12
+Total Project Cost: USD 77
+
+Use Case 3: Event Planning
+Note: "Sister's Birthday Party"
+Linked Expenses:
+  - Venue: PKR 8,000
+  - Catering: PKR 15,000
+  - Decorations: PKR 3,500
+  - Gifts: PKR 4,000
+Total Event Cost: PKR 30,500
+
+Features:
+1. Quick Link Creation
+   - Link expense to note during creation
+   - Add expenses from note detail page
+   - Bulk link multiple expenses to note
+
+2. Link Management
+   - View all linked items
+   - Unlink individual items
+   - Transfer links to different note
+
+3. Aggregated Views
+   - Total linked expenses per note
+   - Notes with highest expenses
+   - Unlinked expenses view
+
+4. Smart Suggestions (Phase 3)
+   - Auto-suggest notes based on expense category
+   - Detect recurring patterns
+   - Budget alerts for linked items
+
+Acceptance Criteria:
+- Linking/unlinking takes < 1 second
+- Link updates sync across both modules instantly
+- No orphaned links after deletions
+
+
+================================================================================
+7. USER EXPERIENCE & INTERFACE DESIGN
+================================================================================
+
+Design Principles:
+1. Mobile-First: Optimized for phone screens (320px+)
+2. Minimalist: Clean, distraction-free interface
+3. Fast: < 2 second page transitions
+4. Accessible: WCAG 2.1 AA compliant
+5. Consistent: Unified design language
+
+Color Palette:
+- Primary: #4F46E5 (Indigo)
+- Secondary: #10B981 (Green - Income)
+- Warning: #EF4444 (Red - Expense)
+- Background: #FFFFFF (Light) / #1F2937 (Dark)
+- Text: #111827 (Light) / #F9FAFB (Dark)
+
+Typography:
+- Primary Font: Inter (body text)
+- Headings: Inter Semi-Bold
+- Numbers: Tabular Nums (monospace)
+- Size Scale: 12px, 14px, 16px, 20px, 24px, 32px
+
+
+--------------------------------------------------------------------------------
+7.1 SCREEN SPECIFICATIONS
+--------------------------------------------------------------------------------
+
+Screen 1: Splash Screen
+Duration: 1-2 seconds
+Elements:
+- App logo (centered)
+- App name "NoteSpend"
+- Loading spinner
+- Version number (bottom)
+
+Screen 2: Home Dashboard
+Layout: Summary Cards + Quick Actions
+Elements:
+- Month selector (dropdown)
+- Financial Summary Card:
+  * Total Income (green)
+  * Total Expenses (red)
+  * Net Balance (green/red based on value)
+- Recent Notes (3 cards)
+  * Title, date, linked expense count
+- Recent Expenses (3 cards)
+  * Amount, category, date
+- Quick Action Button (floating)
+
+Screen 3: Notes Page
+Layout: List View with Filters
+Elements:
+- Search bar (top)
+- Tag filter chips (scrollable)
+- Sort dropdown (Date/Title/Modified)
+- Notes list (cards):
+  * Pin indicator
+  * Title
+  * Preview (first 100 chars)
+  * Date & time
+  * Tags
+  * Linked expense count badge
+- Floating "Add Note" button
+- Empty state: Illustration + "Create your first note"
+
+Screen 4: Note Detail Page
+Layout: Full-Screen Content View
+Elements:
+- Back button
+- Title (editable on tap)
+- Description (expandable)
+- Metadata: Date, time, tags
+- Attachments section (if any)
+- Linked Expenses Section:
+  * Heading: "Linked Expenses (X)"
+  * Expense cards (amount, category, date)
+  * Total linked amount
+  * "Add Expense" button
+- Action buttons: Edit, Delete, Share
+
+Screen 5: Add/Edit Note Page
+Layout: Form View
+Elements:
+- Title input (with character counter)
+- Description textarea (rich text editor - Phase 2)
+- Tags input (multi-select chips)
+- Attachment upload button
+- Save button (primary)
+- Cancel button (secondary)
+- Auto-save indicator
+
+Screen 6: Expenses Page
+Layout: List View with Summary
+Elements:
+- Month selector
+- Summary Banner:
+  * Income (green)
+  * Expenses (red)
+  * Balance
+- Filter button (opens filter drawer):
+  * Date range picker
+  * Category multi-select
+  * Amount range slider
+  * Type toggle (All/Income/Expense)
+- Expense list (grouped by date):
+  * Amount (prominent)
+  * Category icon
+  * Description
+  * Receipt indicator
+  * Linked note badge
+- Floating "Add Expense" button
+- Empty state: Illustration + "Add your first expense"
+
+Screen 7: Add/Edit Expense Page
+Layout: Form View
+Elements:
+- Type toggle (Expense/Income)
+- Amount input (large, numeric keypad)
+- Currency display (read-only, from settings)
+- Category selector (icons + labels)
+- Date picker (defaults to today)
+- Description input (optional)
+- Receipt upload:
+  * Camera button
+  * Gallery button
+  * Preview thumbnail
+- Link to Note dropdown (searchable)
+- Save button (primary)
+- Cancel button (secondary)
+
+Screen 8: Reports/Summary Page
+Layout: Charts + Analytics
+Elements:
+- Time period selector (Month/Quarter/Year)
+- Key Metrics Cards:
+  * Total Income
+  * Total Expenses
+  * Avg Daily Spending
+  * Biggest Expense Category
+- Category Breakdown Chart (Pie/Donut)
+- Monthly Trend Chart (Line/Bar)
+- Top Expenses List (5 items)
+- Export button (PDF/CSV)
+
+Screen 9: Settings Page
+Layout: Grouped List
+Elements:
+- General Settings:
+  * Currency selection (USD, PKR, EUR, etc.)
+  * Date format (DD/MM/YYYY, MM/DD/YYYY)
+  * First day of week
+- Appearance:
+  * Theme toggle (Light/Dark/Auto)
+  * Font size (Small/Medium/Large)
+- Categories:
+  * Manage expense categories
+  * Manage income categories
+- Data Management:
+  * Export all data (JSON)
+  * Export expenses (CSV)
+  * Import data
+  * Clear all data (with confirmation)
+- About:
+  * App version
+  * Privacy policy
+  * Terms of service
+  * Contact support
+
+
+--------------------------------------------------------------------------------
+7.2 NAVIGATION STRUCTURE
+--------------------------------------------------------------------------------
+
+Bottom Navigation Bar (Primary Navigation):
+Position: Fixed at bottom
+Height: 64px
+Items: 5 tabs
+
+| Icon      | Label     | Route        | Badge         |
+|-----------|-----------|--------------|---------------|
+| Home      | Home      | /            | None          |
+| Document  | Notes     | /notes       | Count (if >0) |
+| Plus      | Add       | Modal        | None          |
+| Wallet    | Expenses  | /expenses    | None          |
+| Settings  | Settings  | /settings    | None          |
+
+Quick Add Modal (Triggered by "+" button):
+Options:
+1. Add Note → Opens Add Note screen
+2. Add Expense → Opens Add Expense screen
+Style: Bottom sheet (mobile), centered modal (desktop)
+
+Secondary Navigation:
+- Back buttons on detail/edit pages
+- Breadcrumbs on desktop view
+- Swipe gestures (mobile):
+  * Swipe right: Go back
+  * Swipe left on list item: Delete
+  * Pull to refresh on lists
+
+
+================================================================================
+8. TECHNICAL ARCHITECTURE
+================================================================================
+
+Architecture Pattern: Client-Side Progressive Web App (PWA)
+
+Key Technical Decisions:
+1. No backend required for MVP (local-first)
+2. IndexedDB for data persistence
+3. Service Workers for offline capability
+4. Future: Optional cloud sync (Phase 4)
+
+
+--------------------------------------------------------------------------------
+8.1 TECHNOLOGY STACK
+--------------------------------------------------------------------------------
+
+Frontend Framework:
+- React 18.x (with Vite)
+  Rationale: Component reusability, large ecosystem, fast development
+
+Build Tool:
+- Vite 5.x
+  Rationale: Fast HMR, optimized builds, modern tooling
+
+Styling:
+- Tailwind CSS 3.x
+  Rationale: Utility-first, responsive, small bundle size
+- CSS Modules (for complex components)
+
+Icons:
+- Lucide React
+  Rationale: Consistent, customizable, tree-shakeable
+
+State Management:
+- React Context API + useReducer
+  Rationale: Sufficient for app complexity, no external dependencies
+- Local state for UI interactions
+
+Routing:
+- React Router v6
+  Rationale: Standard, well-documented, supports nested routes
+
+Database:
+- IndexedDB
+  Rationale: Large storage capacity, structured data, async API
+- Wrapper Library: Dexie.js
+  Rationale: Simplified API, better error handling, hooks support
+
+Charts:
+- Recharts
+  Rationale: React-native, declarative, responsive
+
+Date Handling:
+- Day.js
+  Rationale: Lightweight (2KB), Moment.js alternative, i18n support
+
+Utilities:
+- uuid: Unique ID generation
+- file-saver: File export functionality
+- papaparse: CSV parsing/generation
+
+PWA Features:
+- Workbox (Service Worker library)
+- Web App Manifest
+- IndexedDB for offline data
+
+Form Management:
+- React Hook Form
+  Rationale: Performance, minimal re-renders, easy validation
+
+Validation:
+- Zod
+  Rationale: TypeScript-first, runtime validation, great DX
+
+Testing (Phase 2):
+- Vitest (unit tests)
+- React Testing Library (component tests)
+- Playwright (E2E tests)
+
+
+--------------------------------------------------------------------------------
+8.2 DATA MODELS
+--------------------------------------------------------------------------------
+
+Note Schema:
+{
+  id: string (UUID),
+  title: string (required, max 100 chars),
+  description: string (optional, max 10000 chars),
+  tags: string[] (max 20 tags),
+  pinned: boolean (default: false),
+  createdAt: timestamp (ISO 8601),
+  updatedAt: timestamp (ISO 8601),
+  attachments: [
+    {
+      id: string (UUID),
+      name: string,
+      type: string (MIME type),
+      size: number (bytes),
+      data: string (Base64) | Blob
+    }
+  ],
+  linkedExpenseIds: string[] (UUIDs),
+  isDeleted: boolean (default: false),
+  deletedAt: timestamp | null
+}
+
+Expense Schema:
+{
+  id: string (UUID),
+  type: 'expense' | 'income',
+  amount: number (decimal, 2 places),
+  currency: string (ISO 4217 code, e.g., 'USD'),
+  category: string,
+  date: timestamp (ISO 8601),
+  description: string (optional, max 500 chars),
+  receiptImage: {
+    id: string (UUID),
+    data: string (Base64) | Blob,
+    type: string (MIME type)
+  } | null,
+  linkedNoteId: string (UUID) | null,
+  createdAt: timestamp (ISO 8601),
+  updatedAt: timestamp (ISO 8601),
+  isDeleted: boolean (default: false),
+  deletedAt: timestamp | null
+}
+
+Category Schema:
+{
+  id: string (UUID),
+  name: string,
+  type: 'expense' | 'income',
+  icon: string (icon name),
+  color: string (hex code),
+  isDefault: boolean,
+  createdAt: timestamp (ISO 8601)
+}
+
+Settings Schema:
+{
+  currency: string (default: 'USD'),
+  dateFormat: string (default: 'DD/MM/YYYY'),
+  theme: 'light' | 'dark' | 'auto' (default: 'auto'),
+  fontSize: 'small' | 'medium' | 'large' (default: 'medium'),
+  firstDayOfWeek: number (0-6, default: 0 for Sunday),
+  showDeletedItems: boolean (default: false)
+}
+
+
+--------------------------------------------------------------------------------
+8.3 STORAGE & PERFORMANCE
+--------------------------------------------------------------------------------
+
+IndexedDB Structure:
+
+Database Name: NotesSpendDB
+Version: 1
+
+Object Stores:
+1. notes
+   - Key Path: id
+   - Indexes: createdAt, updatedAt, pinned, tags, isDeleted
+
+2. expenses
+   - Key Path: id
+   - Indexes: date, category, type, linkedNoteId, isDeleted
+
+3. categories
+   - Key Path: id
+   - Indexes: type, name
+
+4. settings
+   - Key Path: key
+   - No indexes
+
+Storage Quotas:
+- Target: 50MB - 100MB
+- Maximum: 500MB (device dependent)
+- Alert user at 80% capacity
+
+Performance Targets:
+- Initial load: < 2 seconds
+- Note creation: < 500ms
+- Expense creation: < 500ms
+- Search results: < 100ms (up to 1000 items)
+- Chart rendering: < 1 second
+- Offline sync queue processing: < 3 seconds
+
+Optimization Strategies:
+1. Lazy loading: Load lists in batches (20 items initially)
+2. Virtual scrolling: For large lists (>100 items)
+3. Memoization: Cache expensive calculations
+4. Debounced search: 300ms delay
+5. Image compression: Resize uploads to max 1920px
+6. Code splitting: Route-based chunks
+7. Tree shaking: Remove unused code
+8. Service Worker caching: Cache static assets
+
+
+================================================================================
+9. DEVELOPMENT ROADMAP
+================================================================================
+
+Phase 1: MVP (6-8 weeks)
+Focus: Core functionality without bells and whistles
+
+Week 1-2: Foundation
+- Project setup (Vite + React + Tailwind)
+- IndexedDB integration (Dexie.js)
+- Basic routing setup
+- Design system components (buttons, inputs, cards)
+
+Week 3-4: Notes Module
+- CRUD operations
+- Tags management
+- Search functionality
+- Pin/unpin notes
+- Note detail view
+
+Week 5-6: Expense Module
+- CRUD operations
+- Categories (default set)
+- Date filtering
+- Monthly summary calculations
+- Basic charts (Recharts)
+
+Week 7-8: Integration & Polish
+- Smart linking system
+- Bottom navigation
+- Quick add modal
+- Home dashboard
+- Settings page (basic)
+- Bug fixes and optimization
+
+MVP Deliverables:
+✓ Notes CRUD with tags and search
+✓ Expense/Income CRUD with categories
+✓ Smart linking between notes and expenses
+✓ Monthly financial summary
+✓ Responsive design (mobile + desktop)
+✓ Local storage (IndexedDB)
+✓ Bottom navigation
+✓ Export data (JSON)
+
+
+Phase 2: Enhancement (4-6 weeks)
+Focus: User experience improvements
+
+Week 9-10: Rich Features
+- Rich text editor for notes (TipTap/Slate)
+- Note attachments (images, PDFs)
+- Receipt image upload
+- Category customization
+- Dark mode implementation
+
+Week 11-12: Analytics & Insights
+- Advanced charts (category trends, spending patterns)
+- Date range comparisons
+- Top expenses/categories
+- Monthly/yearly reports
+- Export to CSV
+
+Week 13-14: UX Polish
+- Animations and transitions
+- Improved empty states
+- Loading skeletons
+- Error handling improvements
+- Onboarding tutorial
+
+
+Phase 3: PWA & Advanced Features (4-6 weeks)
+Focus: Offline capability and advanced functionality
+
+Week 15-16: PWA Implementation
+- Service Worker setup (Workbox)
+- App manifest
+- Offline mode
+- Install prompts
+- Update notifications
+
+Week 17-18: Advanced Features
+- Recurring expenses
+- Budget limits and alerts
+- Currency conversion
+- Multi-language support (i18n)
+- Accessibility improvements
+
+Week 19-20: Data Management
+- Import from CSV
+- Backup/restore
+- Data encryption (optional)
+- Sync conflict resolution (prep for cloud)
+
+
+Phase 4: Cloud Sync (Optional - 6-8 weeks)
+Focus: Multi-device synchronization
+
+- Backend API development
+- User authentication
+- Cloud storage integration
+- Sync engine
+- Conflict resolution
+- Privacy controls
+
+
+================================================================================
+10. SUCCESS METRICS & KPIs
+================================================================================
+
+User Acquisition:
+- Target: 10,000 installs in first 3 months
+- Source tracking: Direct, referral, social media
+- Install-to-active conversion: > 60%
+
+Engagement Metrics:
+- Daily Active Users (DAU): Target 40% of MAU
+- Monthly Active Users (MAU): Target 7,000 after 3 months
+- Session duration: Target 5+ minutes
+- Session frequency: Target 3+ times per week
+- Feature adoption:
+  * Notes created per user: 10+ per month
+  * Expenses tracked per user: 20+ per month
+  * Smart links created: 30% of expenses
+
+Retention:
+- Day 1 retention: > 70%
+- Day 7 retention: > 50%
+- Day 30 retention: > 35%
+- Churn rate: < 15% monthly
+
+Performance:
+- App load time: < 2 seconds
+- Crash-free sessions: > 99%
+- Offline functionality: 100% feature parity
+- Storage usage: < 100MB average
+
+User Satisfaction:
+- Net Promoter Score (NPS): > 50
+- App Store rating: > 4.5 stars
+- Support tickets per 1000 users: < 5
+- Feature request volume: Track top 10
+
+
+================================================================================
+11. RISK ASSESSMENT & MITIGATION
+================================================================================
+
+Risk 1: Data Loss
+Impact: HIGH | Probability: MEDIUM
+Mitigation:
+- Implement auto-save (every 5 seconds)
+- Export reminders (weekly)
+- Soft delete with recovery period
+- IndexedDB transaction error handling
+- Regular backup prompts
+
+Risk 2: Browser Compatibility
+Impact: MEDIUM | Probability: LOW
+Mitigation:
+- Test on Chrome, Firefox, Safari, Edge
+- Polyfills for older browsers
+- Progressive enhancement strategy
+- Clear browser requirements (last 2 versions)
+
+Risk 3: Storage Quota Exceeded
+Impact: MEDIUM | Probability: MEDIUM
+Mitigation:
+- Monitor storage usage
+- Warn users at 80% capacity
+- Implement data cleanup tools
+- Image compression
+- Attachment size limits
+
+Risk 4: Performance Degradation
+Impact: MEDIUM | Probability: MEDIUM
+Mitigation:
+- Virtual scrolling for large lists
+- Lazy loading
+- Regular performance profiling
+- Pagination for old data
+- Archive old items (>1 year)
+
+Risk 5: User Adoption
+Impact: HIGH | Probability: MEDIUM
+Mitigation:
+- Clear value proposition
+- Simple onboarding
+- Tutorial/walkthrough
+- Use case templates
+- Active marketing campaign
+
+Risk 6: Feature Creep
+Impact: MEDIUM | Probability: HIGH
+Mitigation:
+- Strict MVP scope
+- Feature prioritization framework
+- Regular scope reviews
+- User feedback driven roadmap
+
+
+================================================================================
+12. FUTURE ENHANCEMENTS
+================================================================================
+
+Post-Launch Features (Prioritized):
+
+Priority 1 (Next 3 months):
+- Recurring expense templates
+- Budget goals and alerts
+- Category icons customization
+- Export to PDF
+- Keyboard shortcuts
+
+Priority 2 (3-6 months):
+- Voice notes
+- OCR for receipts
+- Split expenses
+- Multi-currency support
+- Backup to cloud storage
+
+Priority 3 (6-12 months):
+- Collaborative notes (sharing)
+- Bank account integration
+- Investment tracking
+- Tax report generation
+- Mobile apps (iOS/Android native)
+
+Priority 4 (12+ months):
+- AI-powered insights
+- Predictive budgeting
+- Smart categorization
+- Bill reminders
+- Subscription tracking
+
+
+================================================================================
+13. APPENDIX
+================================================================================
+
+A. Glossary of Terms
+
+IndexedDB: Browser-based database for storing large amounts of structured data
+PWA: Progressive Web App - web application that behaves like a native app
+CRUD: Create, Read, Update, Delete operations
+Soft Delete: Marking items as deleted without removing from database
+Service Worker: Script that runs in background for offline functionality
+DXA: Device Independent Pixels used in document measurements
+
+
+B. References
+
+- IndexedDB API Documentation: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
+- PWA Best Practices: https://web.dev/progressive-web-apps/
+- React Documentation: https://react.dev/
+- Tailwind CSS: https://tailwindcss.com/
+- Dexie.js: https://dexie.org/
+
+
+C. Revision History
+
+Version 1.0 - January 30, 2026
+- Initial PRD creation
+- Defined MVP scope and features
+- Established technical architecture
+- Created development roadmap
+
+
+D. Contact & Approvals
+
+Product Owner: [Name]
+Technical Lead: [Name]
+Design Lead: [Name]
+Stakeholder Approval: [Pending]
+
+
+================================================================================
+END OF DOCUMENT
+================================================================================
