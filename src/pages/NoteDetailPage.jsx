@@ -13,7 +13,7 @@ const NoteDetailPage = () => {
   
   const note = useLiveQuery(() => db.notes.get(id), [id]);
   const linkedExpenses = useLiveQuery(() => 
-    db.expenses.where('linkedNoteId').equals(id).reverse().sortBy('date'),
+    db.expenses.where({ linkedNoteId: id, isDeleted: 0 }).reverse().sortBy('date'),
     [id]
   ) || [];
 

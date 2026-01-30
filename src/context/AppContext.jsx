@@ -29,7 +29,7 @@ export const AppProvider = ({ children }) => {
   ) || [];
 
   const expenses = useLiveQuery(() => 
-    db.expenses.where('isDeleted').equals(0).reverse().sortBy('date'),
+    db.expenses.where('isDeleted').equals(0).toArray().then(arr => arr.sort((a, b) => b.date.localeCompare(a.date))),
     []
   ) || [];
 

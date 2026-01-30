@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Filter, ArrowUpCircle, ArrowDownCircle, Wallet, Trash2, Edit2 } from 'lucide-react';
+import { Plus, Filter, ArrowUpCircle, ArrowDownCircle, Wallet, Trash2, Edit2, ChevronRight } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 import { db } from '../db/db';
 import dayjs from 'dayjs';
@@ -8,10 +8,15 @@ import dayjs from 'dayjs';
 const ExpensesPage = () => {
   const navigate = useNavigate();
   const { expenses, currencySymbol } = useAppContext();
-  const [selectedMonth, setSelectedMonth] = useState(dayjs().format('YYYY-MM'));
+  const [selectedMonth, setSelectedMonth] = useState('all');
 
   const filteredExpenses = useMemo(() => {
-    return expenses.filter(e => dayjs(e.date).format('YYYY-MM') === selectedMonth);
+    if (selectedMonth === 'all') return expenses;
+    return expenses.filter(e => {
+      if (!e.date) return false;
+      // Using startsWith for robust YYYY-MM matching
+      return e.date.startsWith(selectedMonth);
+    });
   }, [expenses, selectedMonth]);
 
   const stats = useMemo(() => {
@@ -35,16 +40,24 @@ const ExpensesPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Expenses</h1>
-        <div className="flex items-center gap-2">
-          <input
-            type="month"
+        <div className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-xl flex items-center gap-2">
+          <span className="text-[10px] font-bold uppercase text-gray-400">Month:</span>
+          <select
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
-            className="bg-transparent border-none text-sm font-medium focus:ring-0"
-          />
-          <button className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-            <Filter size={20} />
-          </button>
+            className="bg-transparent border-none text-xs font-bold focus:ring-0 p-0 pr-6 cursor-pointer"
+          >
+            <option value="all">All Time</option>
+            {Array.from({ length: 12 }).map((_, i) => {
+              const m = dayjs().subtract(i, 'month');
+              const val = m.format('YYYY-MM');
+              return (
+                <option key={val} value={val}>
+                  {m.format('MMMM YYYY')}
+                </option>
+              );
+            })}
+          </select>
         </div>
       </div>
 

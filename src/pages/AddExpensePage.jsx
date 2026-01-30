@@ -170,14 +170,32 @@ const AddExpensePage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-500 px-1">Date</label>
-            <input
-              {...register('date')}
-              type="date"
-              className="w-full p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary shadow-sm"
-            />
+            <div className="flex flex-col gap-2">
+              <input
+                {...register('date')}
+                type="date"
+                className="w-full p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary shadow-sm text-sm"
+              />
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setValue('date', dayjs().format('YYYY-MM-DD'))}
+                  className="flex-1 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 hover:bg-gray-100 transition-colors"
+                >
+                  Today
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setValue('date', dayjs().subtract(1, 'day').format('YYYY-MM-DD'))}
+                  className="flex-1 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 hover:bg-gray-100 transition-colors"
+                >
+                  Yesterday
+                </button>
+              </div>
+            </div>
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-500 px-1 flex items-center gap-1">
@@ -185,7 +203,7 @@ const AddExpensePage = () => {
             </label>
             <select
               {...register('linkedNoteId')}
-              className="w-full p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary shadow-sm appearance-none"
+              className="w-full p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary shadow-sm appearance-none text-sm"
             >
               <option value="">No Note</option>
               {notes.map(note => (
