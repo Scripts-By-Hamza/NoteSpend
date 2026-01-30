@@ -8,6 +8,7 @@ import { ArrowLeft, Save, Plus, Link as LinkIcon, Trash2 } from 'lucide-react';
 import { db, defaultExpenseCategories, defaultIncomeCategories } from '../db/db';
 import { useAppContext } from '../context/AppContext';
 import { useEffect } from 'react';
+import { CategoryIcon } from '../components/common/CategoryIcon';
 
 const expenseSchema = z.object({
   type: z.enum(['expense', 'income']),
@@ -154,18 +155,17 @@ const AddExpensePage = () => {
           <label className="text-sm font-medium text-gray-500 px-1">Category</label>
           <div className="grid grid-cols-5 gap-2">
             {categories.map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => setValue('category', cat.name)}
-                className={`flex flex-col items-center justify-center p-2 rounded-xl border transition-all ${selectedCategory === cat.name ? 'border-primary bg-primary/5 text-primary' : 'border-gray-100 dark:border-gray-700 dark:bg-gray-800 text-gray-400'}`}
-              >
-                <div className="w-8 h-8 flex items-center justify-center rounded-full" style={{ backgroundColor: selectedCategory === cat.name ? cat.color + '20' : 'transparent' }}>
-                  {/* Icon component would go here, using a lookup or similar */}
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: cat.color }}></div>
-                </div>
-                <span className="text-[10px] mt-1 text-center line-clamp-1">{cat.name}</span>
-              </button>
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setValue('category', cat.name)}
+                  className={`flex flex-col items-center justify-center p-2 rounded-xl border transition-all ${selectedCategory === cat.name ? 'border-primary bg-primary/5 text-primary' : 'border-gray-100 dark:border-gray-700 dark:bg-gray-800 text-gray-400'}`}
+                >
+                  <div className="w-8 h-8 flex items-center justify-center rounded-full mb-1" style={{ backgroundColor: selectedCategory === cat.name ? cat.color + '20' : 'transparent', color: selectedCategory === cat.name ? cat.color : undefined }}>
+                    <CategoryIcon name={cat.icon} size={18} />
+                  </div>
+                  <span className="text-[9px] font-bold uppercase tracking-tight text-center line-clamp-1">{cat.name}</span>
+                </button>
             ))}
           </div>
         </div>

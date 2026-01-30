@@ -192,9 +192,9 @@ const SettingsPage = () => {
         />
       )}
 
-      <div className="text-center py-6">
+      {/* <div className="text-center py-6">
         <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Designed with ❤️ for NoteSpend</p>
-      </div>
+      </div> */}
     </div>
   );
 };

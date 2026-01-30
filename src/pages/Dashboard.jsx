@@ -2,8 +2,9 @@ import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { Plus, ChevronRight, FileText, Wallet, ArrowUpCircle, ArrowDownCircle, Edit2, Trash2 } from 'lucide-react';
-import { db } from '../db/db';
+import { db, defaultExpenseCategories, defaultIncomeCategories } from '../db/db';
 import dayjs from 'dayjs';
+import { CategoryIcon } from '../components/common/CategoryIcon';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -112,7 +113,10 @@ const Dashboard = () => {
               >
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${expense.type === 'income' ? 'bg-income/10 text-income' : 'bg-expense/10 text-expense'}`}>
-                    <Wallet size={20} />
+                    <CategoryIcon 
+                      name={[...defaultExpenseCategories, ...defaultIncomeCategories].find(c => c.name === expense.category)?.icon} 
+                      size={20} 
+                    />
                   </div>
                   <div>
                     <h3 className="font-semibold text-sm">{expense.category}</h3>

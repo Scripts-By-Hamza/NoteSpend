@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Filter, ArrowUpCircle, ArrowDownCircle, Wallet, Trash2, Edit2, ChevronRight } from 'lucide-react';
+import { Plus, Filter, Wallet, Trash2, Edit2, ChevronRight } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
-import { db } from '../db/db';
+import { db, defaultExpenseCategories, defaultIncomeCategories } from '../db/db';
 import dayjs from 'dayjs';
+import { CategoryIcon } from '../components/common/CategoryIcon';
 
 const ExpensesPage = () => {
   const navigate = useNavigate();
@@ -99,8 +100,11 @@ const ExpensesPage = () => {
                 {items.map(item => (
                   <div key={item.id} className="p-4 flex items-center justify-between active:bg-gray-50 dark:active:bg-gray-700 transition-colors">
                     <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${item.type === 'income' ? 'bg-income/10 text-income' : 'bg-expense/10 text-expense'}`}>
-                        {item.type === 'income' ? <ArrowUpCircle size={20} /> : <ArrowDownCircle size={20} />}
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${item.type === 'income' ? 'bg-income/10 text-income' : 'bg-expense/10 text-expense'}`}>
+                        <CategoryIcon 
+                          name={[...defaultExpenseCategories, ...defaultIncomeCategories].find(c => c.name === item.category)?.icon} 
+                          size={20} 
+                        />
                       </div>
                       <div>
                         <p className="font-semibold text-sm">{item.category}</p>
