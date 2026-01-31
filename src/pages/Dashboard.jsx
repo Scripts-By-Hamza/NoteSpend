@@ -9,7 +9,7 @@ import { CategoryIcon } from '../components/common/CategoryIcon';
 const Dashboard = () => {
   const navigate = useNavigate();
   const { notes, expenses, currencySymbol, profile, links } = useAppContext();
-  const [showBalance, setShowBalance] = useState(true);
+  const [showBalance, setShowBalance] = useState(false);
 
   const currentMonth = dayjs().format('YYYY-MM');
   const monthStats = useMemo(() => {
@@ -37,7 +37,7 @@ const Dashboard = () => {
           </div>
           <div>
             <p className="text-gray-400 text-xs font-medium">Hello {profile.name},</p>
-            <h1 className="text-xl font-bold text-gray-900 dark:text-white">Welcome Back!</h1>
+            <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Welcome Back!</h1>
           </div>
         </div>
         <div className="bg-white dark:bg-gray-800 p-2.5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center min-w-[70px]">
@@ -82,12 +82,16 @@ const Dashboard = () => {
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.6)]"></div>
                 <p className="text-xs text-white/70 font-medium">Income:</p>
-                <p className="text-sm font-bold tracking-tight text-green-300">{currencySymbol}{monthStats.income.toLocaleString()}</p>
+                <p className="text-sm font-bold tracking-tight text-green-300">
+                  {showBalance ? `${currencySymbol}${monthStats.income.toLocaleString()}` : '••••'}
+                </p>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.6)]"></div>
                 <p className="text-xs text-white/70 font-medium">Expense:</p>
-                <p className="text-sm font-bold tracking-tight text-red-300">{currencySymbol}{monthStats.expense.toLocaleString()}</p>
+                <p className="text-sm font-bold tracking-tight text-red-300">
+                  {showBalance ? `${currencySymbol}${monthStats.expense.toLocaleString()}` : '••••'}
+                </p>
               </div>
             </div>
           </div>

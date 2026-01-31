@@ -51,7 +51,7 @@ const NoteDetailPage = () => {
       </div>
 
       <div className="space-y-4">
-        <h1 className="text-3xl font-bold dark:text-white leading-tight">{note.title}</h1>
+        <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">{note.title}</h1>
         <div className="flex items-center gap-4 text-xs text-gray-400 font-medium">
           <div className="flex items-center gap-1">
             <Clock size={14} />

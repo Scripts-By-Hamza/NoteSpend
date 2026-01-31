@@ -6,15 +6,34 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'auto');
-  const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')) || {
+  const [userAuth, setUserAuth] = useState(null);
+  const [profile, setProfile] = useState({
     name: 'User',
     email: 'user@example.com',
-    avatar: '/avatars/avatar-man.png'
+    avatar: '/avatars/avatar-man.png',
+    userId: ''
   });
   const [currency, setCurrency] = useState(localStorage.getItem('currency') || 'PKR');
 
+  const authData = useLiveQuery(() => db.auth.toArray(), []) || [];
+
   useEffect(() => {
-    localStorage.setItem('profile', JSON.stringify(profile));
+    if (authData.length > 0) {
+      const user = authData[0];
+      setUserAuth(user);
+      setProfile(prev => ({
+        ...prev,
+        name: user.username,
+        email: user.email,
+        userId: user.userId
+      }));
+    }
+  }, [authData]);
+
+  useEffect(() => {
+    if (profile.name !== 'User') {
+      localStorage.setItem('profile', JSON.stringify(profile));
+    }
   }, [profile]);
 
   useEffect(() => {
@@ -40,6 +59,11 @@ export const AppProvider = ({ children }) => {
     []
   ) || [];
 
+  const passwords = useLiveQuery(() =>
+    db.passwords.where('isDeleted').equals(0).reverse().sortBy('createdAt'),
+    []
+  ) || [];
+
   useEffect(() => {
     // Initializing DB or checking status
     db.open().catch(err => {
@@ -62,6 +86,7 @@ export const AppProvider = ({ children }) => {
     expenses,
     settings,
     links,
+    passwords,
     theme,
     setTheme,
     currency,
@@ -69,8 +94,10 @@ export const AppProvider = ({ children }) => {
     currencySymbol,
     profile,
     setProfile,
+    userAuth,
+    setUserAuth,
     db
-  }), [notes, expenses, settings, links, theme, currency, currencySymbol, profile]);
+  }), [notes, expenses, settings, links, passwords, theme, currency, currencySymbol, profile, userAuth]);
 
   return (
     <AppContext.Provider value={value}>

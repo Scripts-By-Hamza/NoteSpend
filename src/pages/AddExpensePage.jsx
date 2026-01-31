@@ -103,7 +103,7 @@ const AddExpensePage = () => {
         <button onClick={() => navigate(-1)} className="p-2 -ml-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
           <ArrowLeft size={24} />
         </button>
-        <h1 className="text-xl font-semibold">{isEdit ? 'Edit' : 'Add'} Transaction</h1>
+        <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">{isEdit ? 'Edit' : 'Add'} Transaction</h1>
         <div className="flex items-center gap-2">
             {isEdit && (
                 <button 

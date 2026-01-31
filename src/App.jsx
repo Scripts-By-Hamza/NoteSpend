@@ -9,9 +9,25 @@ import AddNotePage from './pages/AddNotePage';
 import AddExpensePage from './pages/AddExpensePage';
 import NoteDetailPage from './pages/NoteDetailPage';
 import LinksPage from './pages/LinksPage';
+import PasswordsPage from './pages/PasswordsPage';
 import ProfilePage from './pages/ProfilePage';
+import RegistrationPage from './pages/RegistrationPage';
+import { useAppContext } from './context/AppContext';
 
 function App() {
+  const { userAuth } = useAppContext();
+
+  if (!userAuth) {
+    return (
+      <Router>
+        <Routes>
+          <Route path="/register" element={<RegistrationPage />} />
+          <Route path="*" element={<Navigate to="/register" replace />} />
+        </Routes>
+      </Router>
+    );
+  }
+
   return (
     <Router>
       <Routes>
@@ -23,6 +39,7 @@ function App() {
           <Route path="expenses" element={<ExpensesPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="links" element={<LinksPage />} />
+          <Route path="passwords" element={<PasswordsPage />} />
           <Route path="add-note" element={<AddNotePage />} />
           <Route path="add-expense" element={<AddExpensePage />} />
           <Route path="expenses/edit/:id" element={<AddExpensePage />} />

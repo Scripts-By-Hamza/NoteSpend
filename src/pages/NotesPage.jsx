@@ -43,7 +43,7 @@ const NotesPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Notes</h1>
+        <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Notes</h1>
         <button className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
           <MoreVertical size={24} />
         </button>
@@ -92,7 +92,7 @@ const NotesPage = () => {
 
       <button
         onClick={() => navigate('/add-note')}
-        className="fixed bottom-20 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all sm:hidden"
+        className="fixed bottom-24 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-2xl shadow-primary/40 flex items-center justify-center hover:scale-110 active:scale-95 transition-all sm:hidden z-40"
       >
         <Plus size={32} />
       </button>

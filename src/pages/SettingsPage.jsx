@@ -16,7 +16,10 @@ import {
   Clock,
   Info,
   ShieldCheck,
-  Smartphone
+  Smartphone,
+  Fingerprint,
+  Key as KeyIcon,
+  ShieldAlert
 } from 'lucide-react';
 import { saveAs } from 'file-saver';
 import dayjs from 'dayjs';
@@ -83,7 +86,7 @@ const SettingsPage = () => {
   return (
     <div className="space-y-8 pb-10">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Settings</h1>
+        <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Settings</h1>
         <div className="flex items-center gap-2">
             <span className="text-[10px] bg-primary/10 text-primary px-2 py-1 rounded-full font-bold">BETA</span>
         </div>
@@ -96,7 +99,11 @@ const SettingsPage = () => {
         </div>
         <div className="flex-1 min-w-0">
             <h2 className="text-lg font-bold truncate">{profile.name}</h2>
-            <p className="text-sm text-gray-400 truncate">{profile.email}</p>
+            <div className="flex items-center gap-2">
+                <p className="text-sm text-gray-400 truncate">{profile.email}</p>
+                <div className="w-1 h-1 rounded-full bg-gray-300"></div>
+                <p className="text-[10px] font-mono font-bold bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-gray-500 uppercase tracking-tighter">ID: {profile.userId}</p>
+            </div>
         </div>
         <button 
             onClick={() => setIsProfileModalOpen(true)}
@@ -104,6 +111,33 @@ const SettingsPage = () => {
         >
             <User size={20} />
         </button>
+      </div>
+
+      <div className="space-y-3">
+        <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-1">Security</h2>
+        <div className="grid gap-2">
+           <SettingItem 
+            icon={Fingerprint} 
+            label="Account Password" 
+            value="Change your login password" 
+            onClick={() => {
+                const newPass = prompt("Enter new password:");
+                if (newPass && newPass.length >= 4) {
+                    db.auth.toCollection().first().then(user => {
+                        if (user) {
+                            db.auth.update(user.userId, { password: newPass }).then(() => {
+                                alert("Password updated successfully!");
+                            });
+                        }
+                    });
+                } else if (newPass) {
+                    alert("Password must be at least 4 characters.");
+                }
+            }}
+            color="text-amber-500"
+          />
+          <SettingItem icon={ShieldAlert} label="Two-Factor Auth" value="Disabled" color="text-gray-400" />
+        </div>
       </div>
 
       <div className="space-y-3">

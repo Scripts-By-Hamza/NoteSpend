@@ -7,7 +7,9 @@ db.version(1).stores({
   expenses: 'id, date, category, type, linkedNoteId, isDeleted',
   categories: 'id, type, name',
   settings: 'key',
-  links: 'id, name, url, createdAt, updatedAt, isDeleted'
+  links: 'id, name, url, createdAt, updatedAt, isDeleted',
+  passwords: 'id, serviceName, username, createdAt, isDeleted',
+  auth: 'userId, username, email, password'
 });
 
 // Default categories

@@ -111,10 +111,10 @@ const LinksPage = () => {
         </div>
         <button 
           onClick={() => setShowAddModal(true)}
-          className="hidden sm:flex items-center space-x-2 bg-primary text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+          className="hidden sm:flex items-center justify-center w-11 h-11 bg-primary text-white rounded-full shadow-lg shadow-primary/20 hover:scale-[1.1] active:scale-[0.9] transition-all"
+          title="Add New Link"
         >
-          <Plus size={20} />
-          <span>Add New Link</span>
+          <Plus size={24} />
         </button>
       </div>
 
@@ -159,7 +159,7 @@ const LinksPage = () => {
       {/* Mobile Add Button */}
       <button
         onClick={() => setShowAddModal(true)}
-        className="fixed bottom-24 right-6 w-16 h-16 bg-primary text-white rounded-2xl shadow-2xl flex items-center justify-center hover:scale-110 active:scale-90 transition-all sm:hidden z-40"
+        className="fixed bottom-24 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-2xl shadow-primary/40 flex items-center justify-center hover:scale-110 active:scale-95 transition-all sm:hidden z-40"
       >
         <Plus size={32} />
       </button>
