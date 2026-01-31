@@ -1,9 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { X, Save, User as UserIcon, Mail, Camera } from 'lucide-react';
 
 const ProfileModal = ({ profile, onSave, onClose }) => {
   const [formData, setFormData] = useState({ ...profile });
   const [activeAvatar, setActiveAvatar] = useState(profile.avatar);
+  const fileInputRef = useRef(null);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64String = event.target.result;
+        setActiveAvatar(base64String);
+        setFormData(prev => ({ ...prev, avatar: base64String }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const avatars = [
     '/avatars/avatar-man.png',
@@ -24,13 +42,23 @@ const ProfileModal = ({ profile, onSave, onClose }) => {
 
         <div className="space-y-8">
           <div className="flex flex-col items-center gap-4">
-            <div className="relative group">
-                <div className="w-24 h-24 rounded-3xl overflow-hidden border-4 border-primary/20 shadow-lg">
+            <div 
+                className="relative group cursor-pointer"
+                onClick={() => fileInputRef.current.click()}
+            >
+                <div className="w-24 h-24 rounded-3xl overflow-hidden border-4 border-primary/20 shadow-lg group-hover:border-primary/50 transition-colors">
                     <img src={activeAvatar} alt="Profile" className="w-full h-full object-cover" />
                 </div>
-                <div className="absolute -bottom-2 -right-2 p-2 bg-primary text-white rounded-xl shadow-lg">
+                <div className="absolute -bottom-2 -right-2 p-2 bg-primary text-white rounded-xl shadow-lg group-hover:scale-110 transition-transform">
                     <Camera size={16} />
                 </div>
+                <input 
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleImageUpload}
+                    accept="image/*"
+                    className="hidden"
+                />
             </div>
             <div className="flex gap-2 p-2 bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-x-auto w-full no-scrollbar">
                 {avatars.map((url, i) => (

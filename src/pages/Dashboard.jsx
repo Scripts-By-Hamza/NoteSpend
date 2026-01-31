@@ -1,14 +1,15 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
-import { Plus, ChevronRight, FileText, Wallet, ArrowUpCircle, ArrowDownCircle, Edit2, Trash2 } from 'lucide-react';
+import { Plus, ChevronRight, FileText, Wallet, ArrowUpCircle, ArrowDownCircle, Edit2, Trash2, Eye, EyeOff, QrCode, ArrowUpRight, ArrowDownLeft, Repeat, History, Link as LinkIcon } from 'lucide-react';
 import { db, defaultExpenseCategories, defaultIncomeCategories } from '../db/db';
 import dayjs from 'dayjs';
 import { CategoryIcon } from '../components/common/CategoryIcon';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { notes, expenses, currencySymbol, profile } = useAppContext();
+  const { notes, expenses, currencySymbol, profile, links } = useAppContext();
+  const [showBalance, setShowBalance] = useState(true);
 
   const currentMonth = dayjs().format('YYYY-MM');
   const monthStats = useMemo(() => {
@@ -20,45 +21,115 @@ const Dashboard = () => {
 
   const recentNotes = notes.slice(0, 3);
   const recentExpenses = expenses.slice(0, 3);
+  const recentLinks = (links || []).slice(0, 3);
 
   return (
     <div className="space-y-8">
-      <div className="space-y-1">
-        <h1 className="text-2xl font-bold">Hello, {profile.name}!</h1>
-        <p className="text-gray-500 text-sm">Here's your summary for {dayjs().format('MMMM YYYY')}</p>
+      {/* Header Section */}
+      <div className="flex items-center justify-between px-1">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-full border-2 border-primary/20 p-0.5 bg-gradient-to-tr from-primary to-blue-400">
+            <img 
+              src={profile.avatar} 
+              alt="Profile" 
+              className="w-full h-full rounded-full object-cover border-2 border-white dark:border-gray-900"
+            />
+          </div>
+          <div>
+            <p className="text-gray-400 text-xs font-medium">Hello {profile.name},</p>
+            <h1 className="text-xl font-bold text-gray-900 dark:text-white">Welcome Back!</h1>
+          </div>
+        </div>
+        <div className="bg-white dark:bg-gray-800 p-2.5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center min-w-[70px]">
+          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">{dayjs().format('MMM')}</p>
+          <p className="text-lg font-black text-primary leading-none">{dayjs().format('DD')}</p>
+        </div>
       </div>
 
-      <div className="bg-primary rounded-[2rem] p-6 text-white shadow-xl shadow-primary/20 relative overflow-hidden">
-        <div className="relative z-10 space-y-6">
-          <div>
-            <p className="text-primary-foreground/70 text-sm font-medium">Net Balance</p>
-            <h2 className="text-4xl font-bold mt-1">{currencySymbol}{monthStats.balance.toFixed(2)}</h2>
-          </div>
-          
-          <div className="flex items-center justify-between pt-4 border-t border-white/10">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-white/10 rounded-xl">
-                <ArrowUpCircle size={20} />
+      {/* Main Banner Card */}
+      <div className="bg-gradient-to-br from-[#5D5FEF] to-[#4446D1] rounded-[2.5rem] p-8 text-white shadow-2xl shadow-primary/30 relative overflow-hidden">
+        <div className="relative z-10 space-y-8">
+          <div className="flex justify-between items-start">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-white/80">
+                <Wallet size={16} />
+                <p className="text-xs font-medium tracking-wide">Your wallet Balance</p>
               </div>
-              <div>
-                <p className="text-white/70 text-[10px] uppercase font-bold tracking-wider">Income</p>
-                <p className="font-bold text-sm">{currencySymbol}{monthStats.income.toFixed(2)}</p>
+              <div className="flex items-center gap-4">
+                <h2 className="text-4xl font-extrabold tracking-tight">
+                  {showBalance ? `${currencySymbol}${monthStats.balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '••••••••'}
+                </h2>
+                <button 
+                  onClick={() => setShowBalance(!showBalance)}
+                  className="p-1 hover:bg-white/10 rounded-full transition-colors"
+                >
+                  {showBalance ? <Eye size={20} /> : <EyeOff size={20} />}
+                </button>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-white/10 rounded-xl text-expense/50 bg-expense/10">
-                <ArrowDownCircle size={20} className="text-white" />
+            
+            <button 
+              onClick={() => navigate('/links')}
+              className="bg-white/10 hover:bg-white/20 p-4 rounded-[1.25rem] backdrop-blur-md transition-all active:scale-95 group"
+            >
+              <QrCode size={32} className="group-hover:rotate-12 transition-transform" />
+            </button>
+          </div>
+
+          {/* Combined Stats */}
+          <div className="space-y-6 pt-4 border-t border-white/10">
+            <div className="flex items-center justify-between px-2">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.6)]"></div>
+                <p className="text-xs text-white/70 font-medium">Income:</p>
+                <p className="text-sm font-bold tracking-tight text-green-300">{currencySymbol}{monthStats.income.toLocaleString()}</p>
               </div>
-              <div>
-                <p className="text-white/70 text-[10px] uppercase font-bold tracking-wider">Expense</p>
-                <p className="font-bold text-sm">{currencySymbol}{monthStats.expense.toFixed(2)}</p>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.6)]"></div>
+                <p className="text-xs text-white/70 font-medium">Expense:</p>
+                <p className="text-sm font-bold tracking-tight text-red-300">{currencySymbol}{monthStats.expense.toLocaleString()}</p>
               </div>
             </div>
           </div>
         </div>
-        {/* Decorative elements */}
-        <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
-        <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+
+        {/* Decorative Glass Elements */}
+        <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-[40px] translate-y-1/2 -translate-x-1/2"></div>
+      </div>
+
+      {/* Recent Links Section */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between px-1">
+          <h2 className="font-bold">Recent Links</h2>
+          <button onClick={() => navigate('/links')} className="text-primary text-sm font-semibold flex items-center">
+            See all <ChevronRight size={16} />
+          </button>
+        </div>
+        <div className="grid gap-3">
+          {recentLinks.length === 0 ? (
+            <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-2xl text-center">
+              <p className="text-sm text-gray-500">No links yet</p>
+            </div>
+          ) : (
+            recentLinks.map(link => (
+              <div 
+                key={link.id} 
+                onClick={() => window.open(link.url, '_blank')}
+                className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center gap-4 active:scale-95 transition-all cursor-pointer"
+              >
+                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+                  <LinkIcon size={20} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-sm truncate">{link.name || 'Untitled Link'}</h3>
+                  <p className="text-xs text-gray-400 truncate">{link.url}</p>
+                </div>
+                <ChevronRight size={16} className="text-gray-300" />
+              </div>
+            ))
+          )}
+        </div>
       </div>
 
       <div className="space-y-4">
